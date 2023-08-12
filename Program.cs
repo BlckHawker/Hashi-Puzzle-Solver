@@ -17,6 +17,7 @@ namespace Hashi_Puzzle_Solver
 
             graphSheet.DrawGraph();
             graphSheet.Solve();
+            graphSheet.DrawGraph();
         }
     }
 }
