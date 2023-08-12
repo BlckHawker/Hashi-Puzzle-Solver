@@ -1,0 +1,16 @@
+{
+    "rowNum":  7,
+    "colNum":  7,
+    "nodes" : [{ "row": 0, "col": 1, "number": 4 },
+               { "row": 0, "col": 6, "number": 3 },
+               { "row": 1, "col": 0, "number": 1 },
+               { "row": 1, "col": 3, "number": 2 },
+               { "row": 1, "col": 5, "number": 3 },
+               { "row": 3, "col": 1, "number": 6 },
+               { "row": 3, "col": 5, "number": 4 },
+               { "row": 5, "col": 1, "number": 4 },
+               { "row": 5, "col": 4, "number": 2 },
+               { "row": 5, "col": 6, "number": 1 },
+               { "row": 6, "col": 0, "number": 3 },
+               { "row": 6, "col": 5, "number": 3 }]
+}
