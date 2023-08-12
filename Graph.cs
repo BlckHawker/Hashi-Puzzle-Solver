@@ -115,11 +115,57 @@ namespace Hashi_Puzzle_Solver
 
                         Console.WriteLine($"Setting this node's briges as {bc}");
                         DrawGraph();
+                        break;
                     }
 
                 }
             } while (foundLogic);
            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns>true if there is at least 1 bridge in each cardinal direction</returns>
+        private bool Corner4(NumberNode node)
+        {
+            return node.Number > 6;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>-1 if it can't be deduced that there is at least 1 single line in each direction. Otherwise returns the number direction that doesn't a line Up (0) Right (1) Down (2) Left(3)</returns>
+        private int Corner3(NumberNode node)
+        {
+            if (node.Number > 6)
+            {
+                return -1;
+            }
+
+            if (VoidUp(node) == -1)
+            {
+                return 0;
+            }
+
+            if(VoidRight(node) == -1) 
+            {
+                return 1;
+            }
+
+
+            if (VoidDown(node) == -1)
+            {
+                return 2;
+            }
+
+            if (VoidDown(node) == -1)
+            {
+                return 3;
+            }
+
+            return -1;
         }
 
         private List<BridgeConfiguration> GetPossibleBridges(NumberNode node)
@@ -139,193 +185,6 @@ namespace Hashi_Puzzle_Solver
             list = RemoveOutOfBoundsDown(list, node);
             list = RemoveOutOfBoundsLeft(list, node);
             list = RemoveConflictBridges(list, node);
-
-
-            //for (int i = list.Count - 1; i > -1; i--)
-            //{
-            //    BridgeConfiguration bc = list[i];
-
-            //    if (node.Row == 5 && node.Col == 4 && bc.ToString() == "1000")
-            //    {
-            //        string a = "1";
-            //    }
-
-            //    //eliminate any configurations that have walls that lead to out of bounds
-            //    //eliminate any configurations that have walls that lead to another bridge
-            //    #region out of bounds / lead to another bridge
-            //    #region Up Check
-            //    if (bc.Up != NumberBridge.None)
-            //    {
-            //        int row = node.Row;
-
-            //        //if we are on the edge, remove it
-            //        if (row == 0)
-            //        {
-            //            list.RemoveAt(i);
-            //            continue;
-            //        }
-
-            //        bool foundOtherNode = false;
-            //        bool foundOtherBridge = false;
-
-            //        while (row != 0 && !foundOtherNode && !foundOtherBridge)
-            //        {
-            //            row--;
-            //            Node currentNode = graph[row, node.Col];
-            //            if (currentNode is NumberNode)
-            //            {
-            //                foundOtherNode = true;
-            //            }
-
-            //            else if (((BridgeNode)currentNode).Bridge != Bridge.None)
-            //            {
-            //                foundOtherBridge = true;
-            //            }
-            //        }
-
-            //        //if we didnt find a node, the we are in the void
-            //        //if we found another bridge, then we are going to connect, which is invalid
-            //        if (!foundOtherNode || foundOtherBridge)
-            //        {
-            //            list.RemoveAt(i);
-            //            continue;
-            //        }
-            //    }
-            //    #endregion
-
-            //    #region Right Check
-            //    if (bc.Right != NumberBridge.None)
-            //    {
-            //        int col = node.Col;
-
-            //        //if we are on the edge, remove it
-            //        if (col == Col - 1)
-            //        {
-            //            list.RemoveAt(i);
-            //            continue;
-            //        }
-
-            //        bool foundOtherNode = false;
-            //        bool foundOtherBridge = false;
-
-            //        while (col != Col - 1 && !foundOtherNode)
-            //        {
-            //            col++;
-            //            Node currentNode = graph[node.Row, col];
-            //            if (currentNode is NumberNode)
-            //            {
-            //                foundOtherNode = true;
-            //            }
-
-            //            else if (((BridgeNode)currentNode).Bridge != Bridge.None)
-            //            {
-            //                foundOtherBridge = true;
-            //            }
-            //        }
-
-            //        //if we didnt find a node, the we are in the void
-            //        //if we found another bridge, then we are going to connect, which is invalid
-            //        if (!foundOtherNode || foundOtherBridge)
-            //        {
-            //            list.RemoveAt(i);
-            //            continue;
-            //        }
-            //    }
-            //    #endregion
-
-            //    #region Down Check
-            //    if (bc.Down != NumberBridge.None)
-            //    {
-            //        int row = node.Row;
-
-            //        //if we are on the edge, remove it
-            //        if (row == Row - 1)
-            //        {
-            //            list.RemoveAt(i);
-            //            continue;
-            //        }
-
-            //        bool foundOtherNode = false;
-            //        bool foundOtherBridge = false;
-
-            //        while (row != Row - 1 && !foundOtherNode)
-            //        {
-            //            row++;
-            //            Node currentNode = graph[row, node.Col];
-            //            if (currentNode is NumberNode)
-            //            {
-            //                foundOtherNode = true;
-            //            }
-
-            //            else if (((BridgeNode)currentNode).Bridge != Bridge.None)
-            //            {
-            //                foundOtherBridge = true;
-            //            }
-            //        }
-
-            //        //if we didnt find a node, the we are in the void
-            //        //if we found another bridge, then we are going to connect, which is invalid
-            //        if (!foundOtherNode || foundOtherBridge)
-            //        {
-            //            list.RemoveAt(i);
-            //            continue;
-            //        }
-            //    }
-            //    #endregion
-
-            //    #region Left Check
-            //    if (bc.Left != NumberBridge.None)
-            //    {
-            //        int col = node.Col;
-
-            //        //if we are on the edge, remove it
-            //        if (col == 0)
-            //        {
-            //            list.RemoveAt(i);
-            //            continue;
-            //        }
-
-            //        bool foundOtherNode = false;
-            //        bool foundOtherBridge = false;
-
-            //        while (col != 0 && !foundOtherNode)
-            //        {
-            //            col--;
-            //            Node currentNode = graph[node.Row, col];
-            //            if (currentNode is NumberNode)
-            //            {
-            //                foundOtherNode = true;
-            //            }
-
-            //            else if (((BridgeNode)currentNode).Bridge != Bridge.None)
-            //            {
-            //                foundOtherBridge = true;
-            //            }
-            //        }
-
-            //        //if we didnt find a node, the we are in the void
-            //        //if we found another bridge, then we are going to connect, which is invalid
-            //        if (!foundOtherNode || foundOtherBridge)
-            //        {
-            //            list.RemoveAt(i);
-            //            continue;
-            //        }
-            //    }
-            //    #endregion
-            //    #endregion
-
-            //    //eliminate any configurations that have walls that dont match the node's current walls
-            //    #region no crossing
-
-            //    if (node.Up != NumberBridge.None && node.Up != bc.Up ||
-            //        node.Right != NumberBridge.None && node.Right != bc.Right ||
-            //        node.Down != NumberBridge.None && node.Down != bc.Down ||
-            //        node.Left != NumberBridge.None && node.Left != bc.Left)
-            //    {
-            //        list.RemoveAt(i);
-            //    }
-            //    #endregion
-            //}
             return list;
         }
 
@@ -343,7 +202,111 @@ namespace Hashi_Puzzle_Solver
         }
 
         /// <summary>
-        /// emoves any Bridge configurations that have bridges that go up out of bounds
+        /// 
+        /// </summary>
+        /// <returns>the row of the number node that was found go up. If none was found, returns -1</returns>
+        private int VoidUp(NumberNode node)
+        {
+            int row = node.Row;
+
+            //we need to find another node, in order to not go out of bounds
+            while (row != 0)
+            {
+                row--;
+                Node current = graph[row, node.Col];
+                if (current is NumberNode)
+                {
+                    return row;
+                }
+                
+                //if a bridge (that has not be drawn by this node) is in the way, then this is invalid
+                else if (node.Up != NumberBridge.None && node.PlaceHolderUp != NumberBridge.None && ((BridgeNode)current).Bridge != Bridge.None)
+                {
+                    return -1;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>the row of the number node that was found go right. If none was found, returns -1</returns>
+        private int VoidRight(NumberNode node)
+        {
+            int col = node.Col;
+            while (col != Col - 1)
+            {
+                col++;
+                Node current = graph[node.Row, col];
+                if (current is NumberNode)
+                {
+                    return col;
+                }
+
+                //if a bridge (that has not be drawn by this node) is in the way, then this is invalid
+                else if (node.Right != NumberBridge.None && node.PlaceHolderRight != NumberBridge.None && ((BridgeNode)current).Bridge != Bridge.None)
+                {
+                    return -1;
+                }
+            }
+            return -1;
+        }
+
+        /// 
+        /// </summary>
+        /// <returns>the row of the number node that was found go down. If none was found, returns -1</returns>
+        private int VoidDown(NumberNode node)
+        {
+            int row = node.Row;
+
+            //we need to find another node, in order to not go out of bounds
+            while (row != Row - 1)
+            {
+                row++;
+                Node current = graph[row, node.Col];
+                if (graph[row, node.Col] is NumberNode)
+                {
+                    return row;
+                }
+
+                //if a bridge (that has not be drawn by this node) is in the way, then this is invalid
+                else if (node.Down != NumberBridge.None && node.PlaceHolderDown != NumberBridge.None && ((BridgeNode)current).Bridge != Bridge.None)
+                {
+                    return -1;
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>the row of the number node that was found go left. If none was found, returns -1</returns>
+        private int VoidLeft(NumberNode node)
+        {
+            int col = node.Col;
+            while (col != 0)
+            {
+                col--;
+                Node current = graph[node.Row, col];
+                if (current is NumberNode)
+                {
+                    return col;
+                }
+
+                //if a bridge (that has not be drawn by this node) is in the way, then this is invalid
+                else if (node.Left != NumberBridge.None && node.PlaceHolderLeft != NumberBridge.None && ((BridgeNode)current).Bridge != Bridge.None)
+                {
+                    return -1;
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// Removes any Bridge configurations that have bridges that go up out of bounds or run into other bridges
         /// </summary>
         /// <returns>a list of Bridge Configuration left that satify this condition</returns>
         private List<BridgeConfiguration> RemoveOutOfBoundsUp(List<BridgeConfiguration> list, NumberNode node)
@@ -358,27 +321,19 @@ namespace Hashi_Puzzle_Solver
                     continue;
                 }
 
-                int row = node.Row;
-
-                //we we are at an edge, this will go out of bounds
-                if (row == 0) { continue; }
-
-                //we need to find another node, in order to not go out of bounds
-                while (row != 0)
+                if (VoidUp(node) != -1)
                 {
-                    row--;
-                    Node currentNode = graph[row, node.Col];
-                    if (currentNode is NumberNode)
-                    {
-                        currentList.Add(b);
-                        break;
-                    }
+                    currentList.Add(b);
                 }
             }
 
             return currentList;
         }
 
+        /// <summary>
+        /// Removes any Bridge configurations that have bridges that go right out of bounds or run into other bridges
+        /// </summary>
+        /// <returns>a list of Bridge Configuration left that satify this condition</returns>
         private List<BridgeConfiguration> RemoveOutOfBoundsRight(List<BridgeConfiguration> list, NumberNode node)
         {
             List<BridgeConfiguration> currentList = new List<BridgeConfiguration>();
@@ -391,21 +346,9 @@ namespace Hashi_Puzzle_Solver
                     continue;
                 }
 
-                int col = node.Col;
-
-                //we we are at an edge, this will go out of bounds
-                if (col == Col - 1) { continue; }
-
-                //we need to find another node, in order to not go out of bounds
-                while (col != Col - 1)
+                if (VoidRight(node) != -1)
                 {
-                    col++;
-                    Node currentNode = graph[node.Row, col];
-                    if (currentNode is NumberNode)
-                    {
-                        currentList.Add(b);
-                        break;
-                    }
+                    currentList.Add(b);
                 }
             }
 
@@ -413,42 +356,44 @@ namespace Hashi_Puzzle_Solver
         }
 
         /// <summary>
-        /// emoves any Bridge configurations that have bridges that go down out of bounds
+        /// Removes any Bridge configurations that have bridges that go down out of bounds or run into other bridges
         /// </summary>
         /// <returns>a list of Bridge Configuration left that satify this condition</returns>
         private List<BridgeConfiguration> RemoveOutOfBoundsDown(List<BridgeConfiguration> list, NumberNode node)
         {
             List<BridgeConfiguration> currentList = new List<BridgeConfiguration>();
 
+            if (node.Row == 0 && node.Col == 4)
+            {
+                int a = 1;
+            }
+
             foreach (BridgeConfiguration b in list)
             {
+                if (b.ToString() == "0211" || b.ToString() == "0112")
+                {
+                    int a = 1;
+                }
+
                 if (b.Down == NumberBridge.None)
                 {
                     currentList.Add(b);
                     continue;
                 }
 
-                int row = node.Row;
-
-                //we we are at an edge, this will go out of bounds
-                if (row == Row - 1) { continue; }
-
-                //we need to find another node, in order to not go out of bounds
-                while (row != Row - 1)
+                if (VoidDown(node) != -1)
                 {
-                    row++;
-                    Node currentNode = graph[row, node.Col];
-                    if (currentNode is NumberNode)
-                    {
-                        currentList.Add(b);
-                        break;
-                    }
+                    currentList.Add(b);
                 }
             }
 
             return currentList;
         }
 
+        /// <summary>
+        /// Removes any Bridge configurations that have bridges that go left out of bounds or run into other bridges
+        /// </summary>
+        /// <returns>a list of Bridge Configuration left that satify this condition</returns>
         private List<BridgeConfiguration> RemoveOutOfBoundsLeft(List<BridgeConfiguration> list, NumberNode node)
         {
             List<BridgeConfiguration> currentList = new List<BridgeConfiguration>();
@@ -461,21 +406,9 @@ namespace Hashi_Puzzle_Solver
                     continue;
                 }
 
-                int col = node.Col;
-
-                //we we are at an edge, this will go out of bounds
-                if (col == 0) { continue; }
-
-                //we need to find another node, in order to not go out of bounds
-                while (col != 0)
+                if (VoidLeft(node) != -1)
                 {
-                    col--;
-                    Node currentNode = graph[node.Row, col];
-                    if (currentNode is NumberNode)
-                    {
-                        currentList.Add(b);
-                        break;
-                    }
+                    currentList.Add(b);
                 }
             }
 

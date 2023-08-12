@@ -58,6 +58,14 @@ namespace Hashi_Puzzle_Solver
         /// </summary>
         public NumberBridge Left { get; set; }
 
+        public NumberBridge PlaceHolderUp { get; set; }
+
+        public NumberBridge PlaceHolderRight { get; set; }
+
+        public NumberBridge PlaceHolderDown { get; set; }
+
+        public NumberBridge PlaceHolderLeft { get; set; }
+
         /// <summary>
         /// This concstuctor is used to create a node from scratch
         /// </summary>
