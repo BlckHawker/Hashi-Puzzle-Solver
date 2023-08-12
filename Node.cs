@@ -53,6 +53,9 @@ namespace Hashi_Puzzle_Solver
         /// </summary>
         public NumberBridge Down { get; set; }
 
+        public int PlaceHolderBridgeNum { get { return (int)PlaceHolderUp + (int)PlaceHolderRight + (int)PlaceHolderDown + (int)PlaceHolderLeft; } }
+
+
         /// <summary>
         /// The type of bridge going left from this node
         /// </summary>
