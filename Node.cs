@@ -34,27 +34,29 @@ namespace Hashi_Puzzle_Solver
         /// <summary>
         /// If the node has the amount of bridges needed
         /// </summary>
-        public bool Finished { get { return CurrentBridgeNum() == Number; } }
+        public bool Finished { get { return CurrentBridgeNum == Number; } }
+
+        public int CurrentBridgeNum { get { return (int)Up + (int)Left + (int)Down + (int)Right; } }
 
         /// <summary>
         /// The type of bridge going up from this node
         /// </summary>
-        NumberBridge Up { get; set; }
+        public NumberBridge Up { get; set; }
 
         /// <summary>
         /// The type of bridge going right from this node
         /// </summary>
-        NumberBridge Right { get; set; }
+        public NumberBridge Right { get; set; }
 
         /// <summary>
         /// The type of bridge going down from this node
         /// </summary>
-        NumberBridge Down { get; set; }
+        public NumberBridge Down { get; set; }
 
         /// <summary>
         /// The type of bridge going left from this node
         /// </summary>
-        NumberBridge Left { get; set; }
+        public NumberBridge Left { get; set; }
 
         /// <summary>
         /// This concstuctor is used to create a node from scratch
@@ -78,16 +80,6 @@ namespace Hashi_Puzzle_Solver
         public override string ToString()
         {
             return $"Node {Row} {Col} has a number of {Number}. Bridges (in NESW order) are: {Up} {Right} {Down} {Left}";
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>The number of bridges currently connceted to this node</returns>
-        public int CurrentBridgeNum()
-        {
-            return (int)Up + (int)Left + (int)Down + (int)Right;
         }
     }
 }

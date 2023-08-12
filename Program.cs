@@ -11,11 +11,12 @@ namespace Hashi_Puzzle_Solver
 
             JsonReader.JsonData a = JsonReader.GetData(path);
             Console.WriteLine("Row Num: " + a.rowNum);
-            Console.WriteLine("Col Num: " + a.colNum);
+            Console.WriteLine("Col Num: " + a.colNum + "\n");
 
             Graph graphSheet = new Graph(a.rowNum, a.colNum, a.nodes);
 
             graphSheet.DrawGraph();
+            graphSheet.Solve();
         }
     }
 }
